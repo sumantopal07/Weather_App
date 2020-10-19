@@ -17,13 +17,13 @@ app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
-//sudo killall -9 nod
+//sudo killall -9 node
 
 //nodemon app.js -e js,hbs
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath))
 
-    //what the server should do
+//what the server should do
 //when someone tries to get the resource at a specific URL
 
 //(partial URL,fucntion what we do when someone visits the route)
@@ -33,10 +33,10 @@ app.use(express.static(publicDirectoryPath))
 //     to send back to the requester
 app.get('', (req, res) => {
     //     //send something back to the requester so if 
-//     //someone's making a request from code using
-//     //something like the NPM request library they will get this back
-//     //if they're making the request from the browser this is what's
-//     //going to display in the browser window
+    //     //someone's making a request from code using
+    //     //something like the NPM request library they will get this back
+    //     //if they're making the request from the browser this is what's
+    //     //going to display in the browser window
     res.render('index', {
         title: 'Weather',
         name: 'Sumanto Pal'
@@ -51,20 +51,24 @@ app.get('/about', (req, res) => {
 })
 
 app.get('/help', (req, res) => {
-    res.render('help', {
-        helpText: 'This is some helpful text.',
-        title: 'Help',
-        name: 'Sumanto Pal'
+        res.render('help', {
+            helpText: 'This is some helpful text.',
+            title: 'Help',
+            name: 'Sumanto Pal'
+        })
     })
-})
+    //ls - a - l~/.ssh
+    //ssh-keygen -t  rsa -b 4096 -C "sumantopal07@gmail.com"
+    //eval "$(ssh-agent -s)"
+    //ssh-add ~/.ssh/id_rsa
 
 app.get('/weather', (req, res) => {
-    const location=req.query.address;
+    const location = req.query.address;
     if (location === undefined || location.length === 0) {
         res.send({
             error: 'Please provide addres to get weather'
         })
-        return ;
+        return;
     }
     geocode(location, (location_error, location_data) => {
 
@@ -72,20 +76,19 @@ app.get('/weather', (req, res) => {
             res.send({
                 error: location_error
             })
-        }
-        else {
-            forecast(location_data,(weather_error, weather_data) => {
+        } else {
+            forecast(location_data, (weather_error, weather_data) => {
                 if (weather_error) {
                     res.send({
                         error: weather_error
                     })
-                    return ;
+                    return;
                 }
                 res.send({
                     error: weather_error,
                     data: weather_data
                 })
-                return ;
+                return;
             })
         }
     })
@@ -93,11 +96,11 @@ app.get('/weather', (req, res) => {
 
 app.get('/products', (req, res) => {
 
-    if(!req.query.search){
+    if (!req.query.search) {
         res.send({
             error: 'You must provide a search term'
         })
-        return ;
+        return;
     }
     console.log(req.query);
     res.send({
